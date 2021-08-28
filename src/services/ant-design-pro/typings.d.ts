@@ -2,8 +2,18 @@
 /* eslint-disable */
 
 declare namespace API {
+  type CommonResult = {
+    code?: number
+    message?: string
+  }
+  type CurrentUserResult = CommonResult & {
+    data?: CurrentUser
+  }
   type CurrentUser = {
+    id?: number
     name?: string;
+    display_name?: string;
+    super_admin?: boolean;
     avatar?: string;
     userid?: string;
     email?: string;
@@ -23,7 +33,11 @@ declare namespace API {
     phone?: string;
   };
 
-  type LoginResult = {
+  type LoginVerify = CommonResult & {
+    data?: string
+  }
+
+  type LoginResult = CommonResult & {
     status?: string;
     type?: string;
     currentAuthority?: string;
@@ -33,6 +47,38 @@ declare namespace API {
     current?: number;
     pageSize?: number;
   };
+
+  type UserList = CommonResult & {
+    data?: {
+      data?: UserListItem[]
+      page_size?: number
+      page_no?: number
+      total_page?: number
+      total_count?: number
+
+    }
+  }
+
+  type UserListItem = {
+    id?: number
+    name?: string;
+    display_name?: string;
+    super_admin?: boolean;
+    create_time?: string;
+    email?: string;
+    mobile?: string;
+    password?: string;
+  }
+
+  type CommonList = {
+    /** 列表的内容总数 */
+    total?: number;
+    success?: boolean;
+  }
+
+  type UserListPro = CommonList & {
+    data?: UserListItem[]
+  }
 
   type RuleListItem = {
     key?: number;
@@ -64,6 +110,7 @@ declare namespace API {
   type LoginParams = {
     username?: string;
     password?: string;
+    verify?: string;
     autoLogin?: boolean;
     type?: string;
   };

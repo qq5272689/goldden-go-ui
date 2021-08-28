@@ -20,7 +20,7 @@ export default (): React.ReactNode => {
         <Alert
           message={intl.formatMessage({
             id: 'pages.welcome.alertMessage',
-            defaultMessage: 'Faster and stronger heavy-duty components have been released.',
+            defaultMessage: '更多功能正在开发中。',
           })}
           type="success"
           showIcon
@@ -30,8 +30,8 @@ export default (): React.ReactNode => {
             marginBottom: 24,
           }}
         />
-        <Typography.Text strong>
-          <FormattedMessage id="pages.welcome.advancedComponent" defaultMessage="Advanced Form" />{' '}
+        {/* <Typography.Text strong>
+          <FormattedMessage id="pages.welcome.advancedComponent" defaultMessage="已" />{' '}
           <a
             href="https://procomponents.ant.design/components/table"
             rel="noopener noreferrer"
@@ -56,7 +56,7 @@ export default (): React.ReactNode => {
             <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
           </a>
         </Typography.Text>
-        <CodePreview>yarn add @ant-design/pro-layout</CodePreview>
+        <CodePreview>yarn add @ant-design/pro-layout</CodePreview> */}
       </Card>
     </PageContainer>
   );

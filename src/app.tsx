@@ -26,6 +26,10 @@ export async function getInitialState(): Promise<{
   const fetchUserInfo = async () => {
     try {
       const msg = await queryCurrentUser();
+      if (msg.code !== 20000) {
+        history.push(loginPath);
+        return
+      }
       return msg.data;
     } catch (error) {
       history.push(loginPath);
@@ -65,15 +69,15 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     },
     links: isDev
       ? [
-          <Link to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
-          <Link to="/~docs">
-            <BookOutlined />
-            <span>业务组件文档</span>
-          </Link>,
-        ]
+        // <Link to="/umi/plugin/openapi" target="_blank">
+        //   <LinkOutlined />
+        //   <span>OpenAPI 文档</span>
+        // </Link>,
+        // <Link to="/~docs">
+        //   <BookOutlined />
+        //   <span>业务组件文档</span>
+        // </Link>,
+      ]
       : [],
     menuHeaderRender: undefined,
     // 自定义 403 页面
