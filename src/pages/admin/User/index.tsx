@@ -6,11 +6,9 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Tag, Drawer, Form } from 'antd';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
+import { ModalForm, ProFormText, ProFormSelect } from '@ant-design/pro-form';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
-import type { FormValueType } from './components/UpdateForm';
-import UpdateForm from './components/UpdateForm';
 import { searchUser, addUser, updateUser, removeUser } from '@/services/ant-design-pro/api';
 
 /**
@@ -45,7 +43,7 @@ const handleAdd = async (fields: API.UserListItem) => {
  *
  * @param fields
  */
-const handleUpdate = async (fields: FormValueType) => {
+const handleUpdate = async (fields: API.UserListItem) => {
     const hide = message.loading('正在配置');
     try {
         const uur = await updateUser(fields);
@@ -110,7 +108,16 @@ const User: React.FC = () => {
     const actionRef = useRef<ActionType>();
     const [currentRow, setCurrentRow] = useState<API.RuleListItem>();
     const [selectedRowsState, setSelectedRows] = useState<API.UserListItem[]>([]);
-
+    const groups: { label: string, value: number }[] = [
+        {
+            value: 1,
+            label: '使用部门',
+        },
+        {
+            value: 2,
+            label: '申请人',
+        },
+    ]
     /**
      * @en-US International configuration
      * @zh-CN 国际化配置
@@ -165,6 +172,22 @@ const User: React.FC = () => {
                         <Tag color="#f50">NO</Tag>
                     )
 
+                }
+            },
+        },
+        {
+            title: (
+                <FormattedMessage
+                    id="pages.admin.user.tablerow.group"
+                    defaultMessage="分组"
+                />
+            ),
+            dataIndex: 'group',
+            render: (dom, entity) => {
+                for (let group of groups) {
+                    if (group.value === dom) {
+                        return (<p>{group.label}</p>)
+                    }
                 }
             },
         },
@@ -256,14 +279,14 @@ const User: React.FC = () => {
                             <a style={{ fontWeight: 600 }}>{selectedRowsState.length}</a>{' '}
                             <FormattedMessage id="pages.searchTable.item" defaultMessage="项" />
                             &nbsp;&nbsp;
-                            <span>
+                            {/* <span>
                                 <FormattedMessage
                                     id="pages.searchTable.totalServiceCalls"
                                     defaultMessage="Total number of service calls"
                                 />{' '}
                                 {selectedRowsState.reduce((pre, item) => pre + item.callNo!, 0)}{' '}
                                 <FormattedMessage id="pages.searchTable.tenThousand" defaultMessage="万" />
-                            </span>
+                            </span> */}
                         </div>
                     }
                 >
@@ -363,6 +386,28 @@ const User: React.FC = () => {
                                 <FormattedMessage
                                     id="pages.admin.user.tablerow.display_name"
                                     defaultMessage="姓名"
+                                />
+                            ),
+                        },
+                    ]}
+                />
+                <ProFormSelect
+                    width="md"
+                    options={groups}
+                    name="group"
+                    label={intl.formatMessage(
+                        { id: "pages.admin.user.tablerow.group", defaultMessage: "分组" }
+                    )}
+                    placeholder={intl.formatMessage(
+                        { id: "pages.admin.user.tablerow.group.placeholder", defaultMessage: "请选择分组" }
+                    )}
+                    rules={[
+                        {
+                            required: true,
+                            message: (
+                                <FormattedMessage
+                                    id="pages.admin.user.tablerow.group.placeholder"
+                                    defaultMessage="请选择分组"
                                 />
                             ),
                         },
@@ -470,17 +515,6 @@ const User: React.FC = () => {
                         id: 'pages.admin.user.tablerow.password',
                         defaultMessage: '密码',
                     })}
-                // rules={[
-                //     {
-                //         required: true,
-                //         message: (
-                //             <FormattedMessage
-                //                 id="pages.admin.user.tablerow.password"
-                //                 defaultMessage="请输入密码！"
-                //             />
-                //         ),
-                //     },
-                // ]}
                 />
                 <ProFormText
                     width="md"
@@ -500,6 +534,28 @@ const User: React.FC = () => {
                                 <FormattedMessage
                                     id="pages.admin.user.tablerow.display_name"
                                     defaultMessage="姓名"
+                                />
+                            ),
+                        },
+                    ]}
+                />
+                <ProFormSelect
+                    width="md"
+                    options={groups}
+                    name="group"
+                    label={intl.formatMessage(
+                        { id: "pages.admin.user.tablerow.group", defaultMessage: "分组" }
+                    )}
+                    placeholder={intl.formatMessage(
+                        { id: "pages.admin.user.tablerow.group.placeholder", defaultMessage: "请选择分组" }
+                    )}
+                    rules={[
+                        {
+                            required: true,
+                            message: (
+                                <FormattedMessage
+                                    id="pages.admin.user.tablerow.group.placeholder"
+                                    defaultMessage="请选择分组"
                                 />
                             ),
                         },

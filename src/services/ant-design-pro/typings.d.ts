@@ -68,6 +68,7 @@ declare namespace API {
     email?: string;
     mobile?: string;
     password?: string;
+    group?: number;
   }
 
   type CommonList = {
