@@ -46,7 +46,7 @@ const Login: React.FC = () => {
   const inputEl = useRef<null | { onClickImage: () => void }>(null)
   const handleSubmit = async (values: API.LoginParams) => {
     setSubmitting(true);
-    if (!cookie.load('goldden_captcha') || typeof cookie.load('goldden_captcha') === 'undefined') {
+    if (!cookie.load('golden_captcha') || typeof cookie.load('golden_captcha') === 'undefined') {
       const defaultLoginFailureMessage = intl.formatMessage({
         id: 'pages.login.verify.overdue',
         defaultMessage: '验证码已过期！',
